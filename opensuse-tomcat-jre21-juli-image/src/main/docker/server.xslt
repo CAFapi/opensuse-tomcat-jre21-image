@@ -47,12 +47,14 @@
             SSLEnabled="true"
             scheme="https"
             secure="true"
-            keystoreFile="/keystore/tomcat.keystore"
-            keystorePass="changeit"
-            keyPass="changeit"
-            clientAuth="false"
-            keyAlias="tomcat"
-            sslProtocol="TLS" />
+            clientAuth="false"&gt;
+        &lt;SSLHostConfig sslProtocol="TLS"&gt;
+            &lt;Certificate certificateKeystoreFile="/keystore/tomcat.keystore"
+                certificateKeystorePassword="changeit"
+                certificateKeyPassword="changeit"
+                certificateKeyAlias="tomcat"/&gt;
+        &lt;/SSLHostConfig&gt;
+    &lt;/Connector&gt;
             setup-tomcat-ssl-cert.sh TLS section end </xsl:comment>
         <xsl:text>
         </xsl:text>
@@ -113,4 +115,3 @@
         </Service>
     </xsl:template>
 </xsl:stylesheet>
-

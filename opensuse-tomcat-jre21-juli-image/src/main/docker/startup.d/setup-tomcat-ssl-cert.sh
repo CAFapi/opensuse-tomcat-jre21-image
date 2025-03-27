@@ -37,26 +37,26 @@ then
 
     # Replace the default keystore with the SSL_TOMCAT_CA_CERT_LOCATION keystore provided
     echo "Replacing default keystore in $CATALINA_HOME/conf/server.xml with provided environment variable SSL_TOMCAT_CA_CERT_LOCATION."
-    sed -i "s@keystoreFile=.*@keystoreFile=\"$SSL_TOMCAT_CA_CERT_LOCATION\"@" $CATALINA_HOME/conf/server.xml
+    sed -i "s@certificateKeystoreFile=.*@certificateKeystoreFile=\"$SSL_TOMCAT_CA_CERT_LOCATION\"@" $CATALINA_HOME/conf/server.xml
 
     # Replace default password with a user defined password if provided
     if [ -n "${SSL_TOMCAT_CA_CERT_KEYSTORE_PASS}" ]
     then
         echo "Replacing keystore pass in $CATALINA_HOME/conf/server.xml with provided environment variable SSL_TOMCAT_CA_CERT_KEYSTORE_PASS"
-        awk -v new_pass="$SSL_TOMCAT_CA_CERT_KEYSTORE_PASS" '/keystorePass=/ {sub(/keystorePass=.*/, "keystorePass=\"" new_pass "\"")} 1' $CATALINA_HOME/conf/server.xml > temp_file && mv temp_file $CATALINA_HOME/conf/server.xml
+        awk -v new_pass="$SSL_TOMCAT_CA_CERT_KEYSTORE_PASS" '/certificateKeystorePassword=/ {sub(/certificateKeystorePassword=.*/, "certificateKeystorePassword=\"" new_pass "\"")} 1' $CATALINA_HOME/conf/server.xml > temp_file && mv temp_file $CATALINA_HOME/conf/server.xml
     fi
 
     # Replace default password with a user defined password if provided
     if [ -n "${SSL_TOMCAT_CA_CERT_KEY_PASS}" ]
     then
         echo "Replacing key pass in $CATALINA_HOME/conf/server.xml with provided environment variable SSL_TOMCAT_CA_CERT_KEY_PASS"
-        awk -v new_pass="$SSL_TOMCAT_CA_CERT_KEY_PASS" '/keyPass=/ {sub(/keyPass=.*/, "keyPass=\"" new_pass "\"")} 1' $CATALINA_HOME/conf/server.xml > temp_file && mv temp_file $CATALINA_HOME/conf/server.xml
+        awk -v new_pass="$SSL_TOMCAT_CA_CERT_KEY_PASS" '/certificateKeyPassword=/ {sub(/certificateKeyPassword=.*/, "certificateKeyPassword=\"" new_pass "\"")} 1' $CATALINA_HOME/conf/server.xml > temp_file && mv temp_file $CATALINA_HOME/conf/server.xml
     fi
 
     # Replace default alias with a user defined alias if provided
     if [ -n "${SSL_TOMCAT_CA_CERT_KEYSTORE_ALIAS}" ]
     then
         echo "Replacing keystore alias in $CATALINA_HOME/conf/server.xml with provided environment variable SSL_TOMCAT_CA_CERT_KEYSTORE_ALIAS"
-        sed -i "s@keyAlias=.*@keyAlias=\"$SSL_TOMCAT_CA_CERT_KEYSTORE_ALIAS\"@" $CATALINA_HOME/conf/server.xml
+        sed -i "s@certificateKeyAlias=.*@certificateKeyAlias=\"$SSL_TOMCAT_CA_CERT_KEYSTORE_ALIAS\"@" $CATALINA_HOME/conf/server.xml
     fi
 fi
