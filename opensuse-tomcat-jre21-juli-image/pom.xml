@@ -122,7 +122,10 @@
         <profile>
             <id>docker-proxy</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>env.HTTP_PROXY</name>
+                </property>
             </activation>
             <build>
                 <plugins>
