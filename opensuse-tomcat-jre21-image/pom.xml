@@ -121,11 +121,6 @@
                                     </inline>
                                 </assembly>
                                 <args>
-                                    <!-- Enable internet access -->
-                                    <http_proxy>${env.HTTP_PROXY}</http_proxy>
-                                    <https_proxy>${env.HTTPS_PROXY}</https_proxy>
-                                    <no_proxy>${env.NO_PROXY}</no_proxy>
-                                    
                                     <!-- Pass in opensuse-tomcat-jre21-juli image as param -->
                                     <JULI_IMAGE>${dockerCafImagePrefix}opensuse-tomcat-jre21-juli${dockerProjectVersion}</JULI_IMAGE>
                                 </args>
@@ -170,4 +165,37 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <!-- profile for docker proxy settings -->
+        <profile>
+            <id>docker-proxy</id>
+            <activation>
+                <property>
+                    <name>env.HTTP_PROXY</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <build>
+                                        <args>
+                                            <!-- Enable internet access -->
+                                            <http_proxy>${env.HTTP_PROXY}</http_proxy>
+                                            <https_proxy>${env.HTTPS_PROXY}</https_proxy>
+                                            <no_proxy>${env.NO_PROXY}</no_proxy>
+                                        </args>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
